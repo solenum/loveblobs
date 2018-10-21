@@ -97,7 +97,11 @@ end
 
 function love.draw()
   for i,v in ipairs(softbodies) do
-    love.graphics.setColor(50*i, 100, 200*i)
+    if love.getVersion == 0 then
+      love.graphics.setColor(50*i, 100, 200*i)
+    else
+      love.graphics.setColor(0.2*i, 0.4, 0.8*i)
+    end
     if (tostring(v) == "softbody") then
       v:draw("fill", false)
     else
