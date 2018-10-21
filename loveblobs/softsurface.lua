@@ -1,9 +1,12 @@
 local dir = (...):gsub('%.[^%.]+$', '')
-require(dir .. ".util")
+local util = require(dir .. ".util")
+local physics = love.physics
+local graphics = love.graphics
+local lmath = love.math
 
 local softsurface = setmetatable({}, {
   __call = function(self, world, x, y, r, s, t)
-    local new = copy(self);
+    local new = util.copy(self);
     new:init(world, x, y, r, s, t);
 
     return setmetatable(new, getmetatable(self));
@@ -45,7 +48,7 @@ function softsurface:init(world, points, precision, mode)
     local x2,y2 = t[i+2],t[i+3]
 
     -- figure out amount of surfaces to create
-    local distance_to   = math.dist(x1, y1, x2, y2)
+    local distance_to   = util.dist(x1, y1, x2, y2)
     local surface_count = math.floor(distance_to / precision)
     local angle_to      = math.atan2(y2 - y1, x2 - x1)
   
@@ -176,7 +179,7 @@ function softsurface:draw(debug)
     end
 
     graphics.setLineWidth(10)
-    tessellate(t[1], t[2]);
+    util.tessellate(t[1], t[2]);
 
     local ok, tri = pcall(lmath.triangulate, t[2])
     if not ok then

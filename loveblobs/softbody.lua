@@ -1,9 +1,11 @@
 local dir = (...):gsub('%.[^%.]+$', '')
-require(dir .. ".util")
+local util = require(dir .. ".util")
+local physics = love.physics
+local graphics = love.graphics
 
 local softbody = setmetatable({}, {
   __call = function(self, world, x, y, r, s, t)
-    local new = copy(self);
+    local new = util.copy(self);
     new:init(world, x, y, r, s, t);
 
     return setmetatable(new, getmetatable(self));
@@ -88,15 +90,15 @@ function softbody:update()
   --update tesselation (for drawing)
   local pos = {};
   for i = 1, #self.nodes, self.smooth do
-    v = self.nodes[i];
+    local v = self.nodes[i];
 
     table.insert(pos, v.body:getX());
     table.insert(pos, v.body:getY());
   end
 
-  tessellate(pos, self.tess[1]);
+  util.tessellate(pos, self.tess[1]);
   for i=1,#self.tess - 1 do
-    tessellate(self.tess[i], self.tess[i+1]);
+    util.tessellate(self.tess[i], self.tess[i+1]);
   end
 end
 

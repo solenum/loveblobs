@@ -1,9 +1,5 @@
-physics  = love.physics
-graphics = love.graphics
-lmath    = love.math
-
-function tessellate(vertices, new_vertices)
-  MIX_FACTOR = .5
+local function tessellate(vertices, new_vertices)
+  local MIX_FACTOR = .5
   new_vertices[#vertices*2] = 0
   for i=1,#vertices,2 do
     local newindex = 2*i
@@ -33,9 +29,9 @@ function tessellate(vertices, new_vertices)
   end
 end
 
-function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
+local function dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
 
-function copy(from)
+local function copy(from)
   local to = {};
 
   for i,v in pairs(from) do
@@ -44,3 +40,5 @@ function copy(from)
 
   return to;
 end
+
+return {tessellate = tessellate, dist = dist, copy = copy}
