@@ -5,6 +5,7 @@ use mouse 2 to spawn softbodies
 --]]
 
 love.blobs = require "loveblobs"
+local util = require "loveblobs.util"
 
 local softbodies = {}
 local mousejoint = nil
@@ -56,16 +57,16 @@ function love.update(dt)
       body = v.centerBody
     elseif tostring(v) == "softsurface" and v.phys then 
       for i,v in ipairs(v.phys) do
-        if math.dist(mx, my, v.body:getX(), v.body:getY()) < 16 and v.fixture:getUserData() == "softsurface" then
+        if util.dist(mx, my, v.body:getX(), v.body:getY()) < 16 and v.fixture:getUserData() == "softsurface" then
           body = v.body
         end
       end
     end
 
     if body then
-      if love.mouse.isDown(1) and math.dist(mx, my, body:getX(), body:getY()) < 128 then
+      if love.mouse.isDown(1) and util.dist(mx, my, body:getX(), body:getY()) < 128 then
         if mousejoint == nil then
-          mousejoint = physics.newMouseJoint(body, body:getPosition())
+          mousejoint = love.physics.newMouseJoint(body, body:getPosition())
           mousejoint:setMaxForce(50000)
           mousejoint:setFrequency(5000)
           mousejoint:setDampingRatio(1) 
