@@ -60,5 +60,4 @@ end
 
 
 ### Gallery
-![a](http://i.imgur.com/DYBv0gt.gif)
 ![b](https://i.imgur.com/7qP6mBg.gif)
